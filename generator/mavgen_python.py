@@ -413,6 +413,8 @@ class %s(MAVLink_message):
                 if (field.type != "char" and field.array_length > 1):
                         for i in range(field.array_length):
                                 outf.write(", self.{0:s}[{1:d}]".format(field.name, i))
+                elif field.type == "char" and field.array_length > 1:
+                        outf.write(", bytes(self.{0:s}[{1:d}], 'utf-8')".format(field.name, i))
                 else:
                         outf.write(", self.{0:s}".format(field.name))
         outf.write("), force_mavlink1=force_mavlink1)\n")
